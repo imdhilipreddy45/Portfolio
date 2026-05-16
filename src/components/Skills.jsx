@@ -66,22 +66,25 @@ const Skills = () => {
               </h3>
               
               <div className="space-y-4">
-                {category.skills.map((skill, sIdx) => (
-                  <div key={sIdx}>
-                    <div className="flex justify-between text-sm mb-1">
-                      <span className="text-gray-300">{skill}</span>
-                      <span className="text-cyan">{Math.floor(Math.random() * (95 - 75 + 1) + 75)}%</span>
+                {category.skills.map((skill, sIdx) => {
+                  const level = 30 + ((skill.length * 7 + sIdx * 13) % 16);
+                  return (
+                    <div key={sIdx}>
+                      <div className="flex justify-between text-sm mb-1">
+                        <span className="text-gray-300">{skill}</span>
+                        <span className="text-cyan">{level}%</span>
+                      </div>
+                      <div className="h-2 w-full bg-primary/50 rounded-full overflow-hidden">
+                        <motion.div
+                          initial={{ width: 0 }}
+                          animate={inView ? { width: `${level}%` } : {}}
+                          transition={{ duration: 1, delay: 0.5 + sIdx * 0.1 }}
+                          className={`h-full bg-gradient-to-r ${category.color}`}
+                        />
+                      </div>
                     </div>
-                    <div className="h-2 w-full bg-primary/50 rounded-full overflow-hidden">
-                      <motion.div
-                        initial={{ width: 0 }}
-                        animate={inView ? { width: `${Math.floor(Math.random() * (95 - 75 + 1) + 75)}%` } : {}}
-                        transition={{ duration: 1, delay: 0.5 + sIdx * 0.1 }}
-                        className={`h-full bg-gradient-to-r ${category.color}`}
-                      />
-                    </div>
-                  </div>
-                ))}
+                  );
+                })}
               </div>
             </motion.div>
           ))}
